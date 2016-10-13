@@ -2,15 +2,25 @@
 
 *Extended from the excellent [angular/quickstart](http://github/angular/quickstart) - October 13, 2016*
 
-This folder extends the [angular/quickstart](http://github/angular/quickstart) by providing a way to produced an "ahead-of-time" compiled version, which is then integrated into a docker image with mongo and [restheart](http://restheart.org). The restheart server is used both for serving static assets (undertow) and for providing a secured REST api to the mongo db. The restheart server can be customized by adding custom application logic handlers, for instance.
+This folder extends the [angular/quickstart](http://github/angular/quickstart) by providing a way to produced an "ahead-of-time" compiled version, which is then integrated into a docker image with mongo and [restheart](http://restheart.org). The restheart server is used both for serving static assets (undertow) and for providing a secured REST api to the mongo db. The restheart server **can be customized** by adding custom application logic handlers, for instance.
 
 During developement phase, jit "compilation" is still available, and you can see what you are doing on the lite-server. You may need to run aot once before you can run jit, since tsc will complain about aot specific ts files.
 
-## Usage
+## Installation and usage
 
-`git clone` this repo, `npm install` to get started.
+Installation
 
-Then remove *.git/*, run `git init*` to create a new repo, do not push application specific files into this one.
+* `git clone` this repo,
+* `npm install` to install client stuff
+* `mvn clean package` to compile restheart custom server
+
+Typical usage
+
+* `npm aot-run` to compile (aot) and run dummy app
+* `npm start` same, with jit version
+* `npm run docker-run` to build and then run a dedicated docker image
+
+Then remove *.git/* forlder and run `git init` to create a new repo - do not push application specific files into this one.
 
 
 
