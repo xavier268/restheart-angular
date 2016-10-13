@@ -1,0 +1,10 @@
+aot
+app
+node_modules
+src
+target/*
+target/**/*
+!target/restheart.jar
+typings
+
+.git
