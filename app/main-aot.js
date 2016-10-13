@@ -1,6 +1,7 @@
-import { platformBrowser } from '@angular/platform-browser';
-import { AppModuleNgFactory } from '../aot/app/app.module.ngfactory';
+"use strict";
+var platform_browser_1 = require('@angular/platform-browser');
+var app_module_ngfactory_1 = require('../aot/app/app.module.ngfactory');
 // Enable production mode - that will shut down messages to the console
 // enableProdMode();
-platformBrowser().bootstrapModuleFactory(AppModuleNgFactory);
+platform_browser_1.platformBrowser().bootstrapModuleFactory(app_module_ngfactory_1.AppModuleNgFactory);
 //# sourceMappingURL=main-aot.js.map
