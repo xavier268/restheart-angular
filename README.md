@@ -57,14 +57,14 @@ Docker related scripts - you rae responsible for ensuring restheart.jar has been
 
 ## Building a docker image
 
-The docker image relies on the *xavier268/restheart image*. This parent image contains
-restheart and mongo. The config files must be in the *etc/* folder. You can add mongo init js scripts in the *mongoscripts/* folder.
+The docker image is built directly from centos:7.
 
-When the new image is built :
+When customizing, please note that :
+
 * the *dist/* folder is copied, as well as *etc/* and *mongoscripts/*
 * the *node_modules/* is **not** available to docker. Make sure you copy the relevant needed imports
 in the *dist/* folder, by modifying the *copy_modules.sh* utility file first.
-* the restheart server is serving both the application and the API from the **https** internal port 4443. Route to external port as needed, typically 443 for https access. It uses a self signed certificate, that requires browser to accept security exception.
+* the restheart server is serving both the application and the API from the **https** internal port 4443. Route to external port as needed, typically 443 for https access. By default, it uses a self signed certificate, that requires browser to accept security exception.
 
 
 ## Testing
