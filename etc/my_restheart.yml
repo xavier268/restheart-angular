@@ -109,16 +109,9 @@ application-logic-mounts:
           url: /_logic/roles
     - what: org.restheart.handlers.applicationlogic.CacheInvalidator
       where: /ic
-      secured: true
-      
-      ## Define body injections FIRST, to allow body processing then
-    - what: com.twiceagain.handlers.logic.MyBodyInjector
-      where: /test
-      secured: false
-      args: 
-          first: "first arg"
-          second: "second arg"
-    - what: com.twiceagain.handlers.logic.TestLogicHandler
+      secured: true      
+     ## Implements a demo logic handler
+    - what: com.twiceagain.handlers.logic.MyLogicHandler
       where: /test
       secured: false
       args: 

@@ -31,17 +31,21 @@ import org.restheart.handlers.injectors.BodyInjectorHandler;
 public class MyLogicHandler extends ApplicationLogicHandler {
 
     private static BodyInjectorHandler INJECTOR;
-    private static MyLogicHandlerCore HANDLER;
+    private static MyLogicHandlerInternal HANDLER;
     
     public MyLogicHandler(PipedHttpHandler next, Map<String, Object> args) {
         super(next, args);
-        HANDLER = new MyLogicHandlerCore(next, args);
+        HANDLER = new MyLogicHandlerInternal(next, args);
         INJECTOR = new BodyInjectorHandler(HANDLER); 
+        System.out.printf("\n*** Construncting %s ***\n", this.getClass());
     }
 
     @Override
     public void handleRequest(HttpServerExchange exchange, RequestContext context) throws Exception {      
+        // Calling just injector will trigger MyLogicHandlerInternal because
+        // chaining was done when constructing.
         INJECTOR.handleRequest(exchange, context);
+        
     }
     
 }

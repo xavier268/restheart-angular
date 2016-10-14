@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.bson.BsonValue;
 import org.bson.Document;
+import org.restheart.Bootstrapper;
 import org.restheart.cache.Cache;
 import org.restheart.cache.CacheFactory;
 import org.restheart.cache.LoadingCache;
@@ -37,25 +38,25 @@ import org.restheart.utils.HttpStatus;
 import org.restheart.utils.ResponseHelper;
 
 /**
- * Test db access from the logic handler.
+ * Test db access from the logic handler. Do not call this class directly, if
+ * the content needs to be set from the body of the request. @see MyLogicHandler
  *
  * @author xavier
  */
-class MyLogicHandlerCore extends ApplicationLogicHandler {
+class MyLogicHandlerInternal extends ApplicationLogicHandler {
 
     private static MongoClient CLIENT;
     private static LoadingCache<String, Document> CACHE;
-    
-    public MyLogicHandlerCore(PipedHttpHandler next, Map<String, Object> args) {
-        super(next, args);    
-        
-                
-        System.out.printf("\n******Constructing TestLogicHandler with args = %s *******\n", args);
+
+    public MyLogicHandlerInternal(PipedHttpHandler next, Map<String, Object> args) {
+        super(next, args);
+
+        System.out.printf("\n******Constructing %s with args = %s *******\n", this.getClass(), args);
 
         // Get client - mongo driver version 3.2
         CLIENT = MongoDBClientSingleton.getInstance().getClient();
-        
-         // Create auto-refreshing cache for the request
+
+        // Create auto-refreshing cache for the request
         CACHE = CacheFactory.createLocalLoadingCache(
                 1,// cache size, 
                 Cache.EXPIRE_POLICY.AFTER_WRITE,
@@ -81,7 +82,12 @@ class MyLogicHandlerCore extends ApplicationLogicHandler {
     @Override
     public void handleRequest(HttpServerExchange exchange, RequestContext context) throws Exception {
         String answer;
-        System.out.println("\n******** the tesLogicHandler was called **********\n");
+        System.out.printf("\n******** the %s was called **********\n",this.getClass());
+        System.out.printf("\n******** Mapped url = %s **********\n",context.getMappedRequestUri());
+        System.out.printf("\n******** Method = %s **********\n",context.getMethod());
+        System.out.printf("\n******** Raw uri (non mapped) = %s **********\n",context.getUri());
+        
+        
         switch (context.getMethod()) {
 
             case GET:
@@ -114,34 +120,32 @@ class MyLogicHandlerCore extends ApplicationLogicHandler {
                 // but are getting a BsonValues instead.
                 BsonValue content = context.getContent();
 
-                // Caution 2 : the context.getContent() is null and not set.
-                // Using directly exchange instead.
-                System.out.printf("\n***POSTED context : %s\n", context.toString());
-                System.out.printf("\n***POSTED URI : %s\n", context.getUri());
-
                 // We can note that authenticated resquests have 
                 // their Auth-Token headers added to the incoming request ...
                 System.out.printf("\n***POSTED exchange : %s\n", exchange.toString());
 
-                // Content length is available, but the content is desperately empty !
+                // Caution : the context.getContent() is read from the 
+                // wrapper class (@see MyLogicHandler)
                 System.out.printf("\n***POSTED exchange Content-Length : %s\n", exchange.getRequestContentLength());
                 System.out.printf("\n***POSTED exchange Content from context : %s\n", content);
 
-//                Trying to manually read the content
-//                if(exchange.getRequestContentLength() > 0) {
-//                String read = ChannelReader.read(exchange.getRequestChannel());
-//                System.out.printf("\n****Read from request channel : %s***\n",read);
-//                }
-                
-                 
-                
-                ResponseHelper.endExchangeWithMessage(
-                        exchange,
-                        context,
-                        HttpStatus.SC_ACCEPTED,
-                        "Recived posted input : " + context.getContent());
+                Document doc = Document.parse(content.toString());
+                System.out.printf("\n***Parsed content : %s***\n", doc);
+
+                exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "application/json");
+                exchange.getResponseSender().send(doc.toJson());
+                exchange.endExchange();
 
                 break;
+                
+            case DELETE:
+                
+                // Shutting down server !!
+                Bootstrapper.shutdown();
+                
+                // Need to close and finish request, or the server will wait
+                exchange.setStatusCode(HttpStatus.SC_ACCEPTED);
+                exchange.endExchange();
 
             default:
                 // Send an error code
