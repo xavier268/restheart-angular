@@ -110,9 +110,20 @@ application-logic-mounts:
     - what: org.restheart.handlers.applicationlogic.CacheInvalidator
       where: /ic
       secured: true
+      
+      ## Define body injections FIRST, to allow body processing then
+    - what: com.twiceagain.handlers.logic.MyBodyInjector
+      where: /test
+      secured: false
+      args: 
+          first: "first arg"
+          second: "second arg"
     - what: com.twiceagain.handlers.logic.TestLogicHandler
       where: /test
       secured: false
+      args: 
+          first: "first arg"
+          second: "second arg"
 
 ### Metadata Named Singletons
 

@@ -22,33 +22,26 @@ import java.util.Map;
 import org.restheart.handlers.PipedHttpHandler;
 import org.restheart.handlers.RequestContext;
 import org.restheart.handlers.applicationlogic.ApplicationLogicHandler;
-import org.restheart.utils.HttpStatus;
-import org.restheart.utils.ResponseHelper;
+import org.restheart.handlers.injectors.BodyInjectorHandler;
 
 /**
- *
+ * Wrapper to inject bodycontent from BodyInjectorHandler before processing.
  * @author xavier
  */
-public class TestLogicHandler extends ApplicationLogicHandler {
+public class MyLogicHandler extends ApplicationLogicHandler {
 
-    public TestLogicHandler(PipedHttpHandler next, Map<String, Object> args) {
+    private static BodyInjectorHandler INJECTOR;
+    private static MyLogicHandlerCore HANDLER;
+    
+    public MyLogicHandler(PipedHttpHandler next, Map<String, Object> args) {
         super(next, args);
+        HANDLER = new MyLogicHandlerCore(next, args);
+        INJECTOR = new BodyInjectorHandler(HANDLER); 
     }
 
     @Override
-    public void handleRequest(HttpServerExchange exchange, RequestContext context) throws Exception {
-
-        System.out.println("\n******** the tesLogicHdler was called **********");
-        if (context.getMethod() == RequestContext.METHOD.GET) {
-            ResponseHelper.endExchangeWithMessage(
-                    exchange, 
-                    context,
-                    HttpStatus.SC_OK, 
-                    "Test message from custom handler");
-        } else {
-            exchange.setStatusCode(HttpStatus.SC_METHOD_NOT_ALLOWED);
-            exchange.endExchange();
-        }
+    public void handleRequest(HttpServerExchange exchange, RequestContext context) throws Exception {      
+        INJECTOR.handleRequest(exchange, context);
     }
-
+    
 }
