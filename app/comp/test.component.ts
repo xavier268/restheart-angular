@@ -1,7 +1,18 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'my-test',
-    template: '<h2>This comes from my test component</h2>'
+
+// Specifing moduleId let's the templat ebe relative.
+// It needs special script (fake module) decalration in the index.
+moduleId : module.id,
+
+  selector: 'my-test',
+  templateUrl: "test.html"
 })
-export class TestComponent { }
+export class TestComponent {
+
+  public login() {
+    console.info("Testing login");
+  }
+
+}
