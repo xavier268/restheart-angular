@@ -3,8 +3,9 @@ dist
 node_modules
 target
 typings
-**/*.js
-**/*.js.map
+*.js
+*.js.map
+app/**/*.js
 
 !mongoscript/**
 !bs-config.js
