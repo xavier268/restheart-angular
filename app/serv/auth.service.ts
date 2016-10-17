@@ -1,10 +1,10 @@
 // Secured authentication access service
-// Transparently managed the authorization token
+// Transparently manage the authorization token
 
 "use strict";
 
 import { Injectable }     from '@angular/core';
-import { Http, Response, Request, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Request, Headers, RequestOptions, RequestOptionsArgs, RequestMethod } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 
 //import 'rxjs/add/operator/map';
@@ -18,8 +18,8 @@ export class AuthService {
   private _user: String = null;
   private _roles: String[];
   private _token: String = null;
-  //private BASEURL: String = "https://localhost:4443"; // debug
-  private BASEURL : String = "";
+  //public BASEURL: String = "https://localhost:4443"; // debug : testing CORS ...
+  public BASEURL: String = "";
 
 
   constructor(private http: Http) { }
@@ -92,7 +92,22 @@ export class AuthService {
       });
   }
 
+  // Generic request
+  // If logged in, authentication token will be added
+  request(method: RequestMethod, url: string): Observable<Response> {
+    let headers = new Headers();
+    if (this.isLogged()) {
+      headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
+    }
 
+    return this.http.request(
+      new Request({
+        "url": url,
+        "method": method,
+        "headers": headers
+      })
+    );
+  }
 
   // Are we already logged ?
   public isLogged(): boolean {

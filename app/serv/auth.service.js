@@ -1,8 +1,8 @@
 // Secured authentication access service
-// Transparently managed the authorization token
+// Transparently manage the authorization token
 "use strict";
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Request, Headers, RequestOptions } from '@angular/http';
 //import 'rxjs/add/operator/map';
 //import 'rxjs/add/operator/do';
 //import 'rxjs/add/observable/throw';
@@ -12,7 +12,7 @@ export var AuthService = (function () {
         // Internal state to ckeck if logged
         this._user = null;
         this._token = null;
-        //private BASEURL: String = "https://localhost:4443"; // debug
+        //public BASEURL: String = "https://localhost:4443"; // debug : testing CORS ...
         this.BASEURL = "";
     }
     // Logging out (client level only).
@@ -81,6 +81,19 @@ export var AuthService = (function () {
             console.error("Error during login");
             console.error(error);
         });
+    };
+    // Generic request
+    // If logged in, authentication token will be added
+    AuthService.prototype.request = function (method, url) {
+        var headers = new Headers();
+        if (this.isLogged()) {
+            headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
+        }
+        return this.http.request(new Request({
+            "url": url,
+            "method": method,
+            "headers": headers
+        }));
     };
     // Are we already logged ?
     AuthService.prototype.isLogged = function () {

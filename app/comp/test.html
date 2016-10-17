@@ -5,3 +5,6 @@ Password <input type="password" #password />
 <p>Logged as : {{auth.getUser()}} , Roles : {{auth.getRoles()}} </p>
 <button (click) = "login(user.value, password.value)">Login</button>
 <button (click) = "logout()">Logout</button>
+<button (click) = "countUsers()">CountUsers</button>
+<br/>
+#users : {{nbUsers}}
