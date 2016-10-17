@@ -3,3 +3,15 @@ dist
 node_modules
 target
 typings
+**/*.js
+**/*.js.map
+
+
+!mongoscript/**/*.js
+!bs-config.js
+!karma-test-shim.js
+!protractor.config.js
+!rollup.js
+!sytem.config.extras.js
+!sytem.config.js
+!wallaby.js
