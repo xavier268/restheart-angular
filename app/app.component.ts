@@ -4,6 +4,9 @@ import { Component } from '@angular/core';
   selector: 'my-app',
   template: `
     <h1>My First Angular App</h1>
-    <my-test></my-test>`
+    <!-- navigation -->
+    <my-nav></my-nav>
+    <!-- Routed views go here -->
+    <router-outlet></router-outlet>`
 })
 export class AppComponent { }

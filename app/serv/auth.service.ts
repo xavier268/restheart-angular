@@ -15,11 +15,11 @@ import { Observable }     from 'rxjs/Observable';
 export class AuthService {
 
   // Internal state to ckeck if logged
-  private _user: String = null;
-  private _roles: String[];
-  private _token: String = null;
+  private _user: string = null;
+  private _roles: string[];
+  private _token: string = null;
   //public BASEURL: String = "https://localhost:4443"; // debug : testing CORS ...
-  public BASEURL: String = "";
+  public BASEURL: string = "";
 
 
   constructor(private http: Http) { }
@@ -27,60 +27,60 @@ export class AuthService {
   // Logging out (client level only).
   public clear() {
     this._token = this._user = this._roles = null;
-    console.info("Logged out");
+    console.log("Logged out");
   }
 
   // Logout (server level)
   public logout() {
     if (this._user == null || this._token == null) {
-      console.info("Trying to logout, but you're not even logged in !");
+      console.log("Trying to logout, but you're not even logged in !");
       return;
     }
     let headers: Headers = new Headers();
     headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
     let options = new RequestOptions({ headers: headers });;
-    console.info("Preparing to logout from server");
+    console.log("Preparing to logout from server");
     this.http.delete(this.BASEURL + "/_authtokens/" + this._user, options)
       .subscribe(
       // resp handelr
       (res) => {
         this.clear();
-        console.info("You're logged out !");
+        console.log("You're logged out !");
       },
       // error handler
       (err) => {
         this.clear();
-        console.info("Error while logging out !");
+        console.log("Error while logging out !");
       }
       );
 
   }
 
   // If sucessful, login extract roles, user, and token
-  public login(user: String, password: String) {
+  public login(user: string, password: string) {
 
     let headers: Headers = new Headers();
     headers.set('Authorization', 'Basic ' + btoa(user + ':' + password));
     let options = new RequestOptions({ headers: headers });;
-    console.info("Preparing to login");
+    console.log("Preparing to login");
     this.clear(); // As a security measure - pending server response.
     this.http.get(this.BASEURL + "/_logic/roles/" + user, options)
       .subscribe(
       // Response handler
       (res) => {
-        console.info("Res"); console.info(res);
+        console.log("Res"); console.log(res);
         if (res != null && res.status == 200) {
           let data = res.json();
-          console.info("data");
-          console.info(data);
-          console.info("Login request returned : ");
-          console.info(data);
+          console.log("data");
+          console.log(data);
+          console.log("Login request returned : ");
+          console.log(data);
           this._user = user;
           this._roles = data.roles;
           this._token = res.headers.get('Auth-Token');
-          console.info("Setting user : ", this._user);
-          console.info("Setting roles : ", this._roles);
-          console.info("Setting token : ", this._token);
+          console.log("Setting user : ", this._user);
+          console.log("Setting roles : ", this._roles);
+          console.log("Setting token : ", this._token);
         } else {
           console.error("Invalid authentication credentials");
         }
@@ -117,12 +117,12 @@ export class AuthService {
   }
 
   // Get user name, or null if not logged
-  public getUser(): String {
+  public getUser(): string {
     return this._user;
   }
 
   // Get the roles
-  public getRoles(): String[] {
+  public getRoles(): string[] {
     return this._roles;
   }
 

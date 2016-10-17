@@ -5,10 +5,10 @@ import { Component } from '@angular/core';
   // It needs special script (fake module) declaration in the index.
   moduleId: module.id,
 
-  selector: 'test',
-  template : `
-        <h1>My test component </h1>
-        This is my test component ...
-        `
+  selector: 'e404',
+  template: `
+          <h1> This page does not exists </h1>
+          Message from the e404 component ...
+          `
 })
-export class TestComponent {}
+export class E404Component { }

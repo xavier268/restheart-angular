@@ -18,31 +18,31 @@ export var AuthService = (function () {
     // Logging out (client level only).
     AuthService.prototype.clear = function () {
         this._token = this._user = this._roles = null;
-        console.info("Logged out");
+        console.log("Logged out");
     };
     // Logout (server level)
     AuthService.prototype.logout = function () {
         var _this = this;
         if (this._user == null || this._token == null) {
-            console.info("Trying to logout, but you're not even logged in !");
+            console.log("Trying to logout, but you're not even logged in !");
             return;
         }
         var headers = new Headers();
         headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
         var options = new RequestOptions({ headers: headers });
         ;
-        console.info("Preparing to logout from server");
+        console.log("Preparing to logout from server");
         this.http.delete(this.BASEURL + "/_authtokens/" + this._user, options)
             .subscribe(
         // resp handelr
         function (res) {
             _this.clear();
-            console.info("You're logged out !");
+            console.log("You're logged out !");
         }, 
         // error handler
         function (err) {
             _this.clear();
-            console.info("Error while logging out !");
+            console.log("Error while logging out !");
         });
     };
     // If sucessful, login extract roles, user, and token
@@ -52,26 +52,26 @@ export var AuthService = (function () {
         headers.set('Authorization', 'Basic ' + btoa(user + ':' + password));
         var options = new RequestOptions({ headers: headers });
         ;
-        console.info("Preparing to login");
+        console.log("Preparing to login");
         this.clear(); // As a security measure - pending server response.
         this.http.get(this.BASEURL + "/_logic/roles/" + user, options)
             .subscribe(
         // Response handler
         function (res) {
-            console.info("Res");
-            console.info(res);
+            console.log("Res");
+            console.log(res);
             if (res != null && res.status == 200) {
                 var data = res.json();
-                console.info("data");
-                console.info(data);
-                console.info("Login request returned : ");
-                console.info(data);
+                console.log("data");
+                console.log(data);
+                console.log("Login request returned : ");
+                console.log(data);
                 _this._user = user;
                 _this._roles = data.roles;
                 _this._token = res.headers.get('Auth-Token');
-                console.info("Setting user : ", _this._user);
-                console.info("Setting roles : ", _this._roles);
-                console.info("Setting token : ", _this._token);
+                console.log("Setting user : ", _this._user);
+                console.log("Setting roles : ", _this._roles);
+                console.log("Setting token : ", _this._token);
             }
             else {
                 console.error("Invalid authentication credentials");

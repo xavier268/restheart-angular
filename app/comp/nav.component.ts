@@ -5,10 +5,13 @@ import { Component } from '@angular/core';
   // It needs special script (fake module) declaration in the index.
   moduleId: module.id,
 
-  selector: 'test',
+  selector: 'my-nav',
   template : `
-        <h1>My test component </h1>
-        This is my test component ...
+        This is my nav component
+        <nav>
+        <a routerLink="/" routerLinkActive="active">Login</a>
+        <a routerLink="/test" routerLinkActive="active">Test</a>
+        </nav>
         `
 })
-export class TestComponent {}
+export class NavComponent {}

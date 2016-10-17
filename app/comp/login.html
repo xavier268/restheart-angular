@@ -1,9 +1,9 @@
-<h2>My test login component</h2>
-User <input #user/>
-Password <input type="password" #password />
+<h2>My login component</h2>
+User <input [(ngModel)] = "user"/>
+Password <input type="password" [(ngModel)]="password" />
 <br/>
 <p>Logged as : {{auth.getUser()}} , Roles : {{auth.getRoles()}} </p>
-<button (click) = "login(user.value, password.value)">Login</button>
+<button (click) = "login()">Login</button>
 <button (click) = "logout()">Logout</button>
 <button (click) = "countUsers()">CountUsers</button>
 <br/>
