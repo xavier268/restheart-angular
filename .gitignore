@@ -13,6 +13,6 @@ typings
 !karma.conf.js
 !protractor.config.js
 !rollup.js
-!sytemjs.config.extras.js
-!sytemjs.config.js
+!systemjs.config.extras.js
+!systemjs.config.js
 !wallaby.js
