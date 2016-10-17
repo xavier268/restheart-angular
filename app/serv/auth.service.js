@@ -36,7 +36,7 @@ var AuthService = (function () {
         ;
         console.info("Preparing to login"); // TODO - WORKS UNTIL HERE THEN ???!!!
         this.logout(); // As a security measure - pending server response.
-        this.http.get("https://localhost:4443/_logic/roles/" + user, options)
+        this.http.get("/_logic/roles/" + user, options)
             .subscribe(
         // Response handler
         function (res) {
