@@ -89,6 +89,9 @@ export var AuthService = (function () {
         if (this.isLogged()) {
             headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
         }
+        else {
+            headers.set('No-Auth-Challenge', "true");
+        }
         return this.http.request(new Request({
             "url": url,
             "method": method,
