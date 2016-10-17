@@ -3,16 +3,5 @@ dist
 node_modules
 target
 typings
-*.js
 *.js.map
 app/**/*.js
-
-
-!bs-config.js
-!karma-test-shim.js
-!karma.conf.js
-!protractor.config.js
-!rollup.js
-!systemjs.config.extras.js
-!systemjs.config.js
-!wallaby.js
