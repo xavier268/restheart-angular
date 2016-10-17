@@ -9,21 +9,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var auth_service_1 = require("../serv/auth.service");
 var TestComponent = (function () {
-    function TestComponent() {
+    // Inject login service
+    function TestComponent(auth) {
+        this.auth = auth;
     }
-    TestComponent.prototype.login = function () {
-        console.info("Testing login");
+    TestComponent.prototype.test = function () {
+        console.info("Testing method called");
+        console.info("User : " + this.user + " Password : " + this.password);
+        this.auth.login(this.user, this.password);
     };
     TestComponent = __decorate([
         core_1.Component({
-            // Specifing moduleId let's the templat ebe relative.
-            // It needs special script (fake module) decalration in the index.
+            // Specifing moduleId let's the template paths be relative.
+            // It needs special script (fake module) declaration in the index.
             moduleId: module.id,
             selector: 'my-test',
             templateUrl: "test.html"
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [auth_service_1.AuthService])
     ], TestComponent);
     return TestComponent;
 }());
