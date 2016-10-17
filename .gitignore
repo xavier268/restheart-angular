@@ -6,8 +6,7 @@ typings
 **/*.js
 **/*.js.map
 
-
-!mongoscript/*.js
+!mongoscript/**
 !bs-config.js
 !karma-test-shim.js
 !karma.conf.js
