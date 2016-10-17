@@ -10,8 +10,9 @@ typings
 !mongoscript/**/*.js
 !bs-config.js
 !karma-test-shim.js
+!karma.conf.js
 !protractor.config.js
 !rollup.js
-!sytem.config.extras.js
-!sytem.config.js
+!sytemjs.config.extras.js
+!sytemjs.config.js
 !wallaby.js
