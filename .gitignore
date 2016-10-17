@@ -5,3 +5,4 @@ target
 typings
 *.js.map
 app/**/*.js
+npm-debug.log
