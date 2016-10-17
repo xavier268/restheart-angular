@@ -11,18 +11,18 @@ import { AuthService } from "../serv/auth.service"
 })
 export class TestComponent {
 
-  user: String;
-  password: String;
 
   // Inject login service
-  constructor(private auth: AuthService) {
-
+  constructor( public auth: AuthService) {
   }
 
-  public test() {
-    console.info("Testing method called");
-    console.info("User : " + this.user + " Password : " + this.password);
-    this.auth.login(this.user, this.password);
+  public login(user:String, password:String) {
+    console.info("Login method called");
+    this.auth.login(user, password);
+  }
+
+  public logout() {
+    this.auth.logout();
   }
 
 }

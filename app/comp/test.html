@@ -1,5 +1,7 @@
 <h2>My test login component</h2>
-<input [(ngModel)] = "user" />
-<input [(ngModel)] = "password" />
+User <input #user/>
+Password <input type="password" #password />
 <br/>
-<button (click) = "test()">Login</button>
+<p>Logged as : {{auth.getUser()}} , Roles : {{auth.getRoles()}} </p>
+<button (click) = "login(user.value, password.value)">Login</button>
+<button (click) = "logout()">Logout</button>

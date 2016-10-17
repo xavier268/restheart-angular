@@ -18,14 +18,42 @@ export class AuthService {
   private _user: String = null;
   private _roles: String[];
   private _token: String = null;
+  //private BASEURL: String = "https://localhost:4443"; // debug
+  private BASEURL : String = "";
 
 
   constructor(private http: Http) { }
 
-  // Logging out (client level).
-  public logout() {
+  // Logging out (client level only).
+  public clear() {
     this._token = this._user = this._roles = null;
     console.info("Logged out");
+  }
+
+  // Logout (server level)
+  public logout() {
+    if (this._user == null || this._token == null) {
+      console.info("Trying to logout, but you're not even logged in !");
+      return;
+    }
+    let headers: Headers = new Headers();
+    headers.set('Authorization', 'Basic ' + btoa(this._user + ':' + this._token));
+    let options = new RequestOptions({ headers: headers });;
+    console.info("Preparing to logout from server");
+    this.http.delete(this.BASEURL + "/_authtokens/" + this._user, options)
+      .subscribe(
+      // resp handelr
+      (res) => {
+        this.clear();
+        console.info("You're logged out !");
+      },
+      // error handler
+      (err) => {
+        this.clear();
+        console.info("Error while logging out !");
+      }
+      );
+
   }
 
   // If sucessful, login extract roles, user, and token
@@ -34,9 +62,9 @@ export class AuthService {
     let headers: Headers = new Headers();
     headers.set('Authorization', 'Basic ' + btoa(user + ':' + password));
     let options = new RequestOptions({ headers: headers });;
-    console.info("Preparing to login"); // TODO - WORKS UNTIL HERE THEN ???!!!
-    this.logout(); // As a security measure - pending server response.
-    this.http.get("/_logic/roles/" + user, options)
+    console.info("Preparing to login");
+    this.clear(); // As a security measure - pending server response.
+    this.http.get(this.BASEURL + "/_logic/roles/" + user, options)
       .subscribe(
       // Response handler
       (res) => {
@@ -63,6 +91,8 @@ export class AuthService {
         console.error(error);
       });
   }
+
+
 
   // Are we already logged ?
   public isLogged(): boolean {
