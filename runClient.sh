@@ -1,5 +1,10 @@
 #! /bin/bash
 
 echo "Building and launching the main client container"
-echo "TO DO"
-
+cd client
+npm run aot
+cd ..
+docker build -t client client/
+docker kill client
+docker rm client
+docker run -d --net=MYBRIDGE --name=client -p 80:8080 client

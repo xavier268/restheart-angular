@@ -19,7 +19,7 @@ export class AuthService {
   private _roles: string[];
   private _token: string = null;
   //public BASEURL: String = "https://localhost:4443"; // debug : testing CORS ...
-  public BASEURL: string = "";
+  public BASEURL: string = "https://localhost:443";
 
 
   constructor(private http: Http) { }
