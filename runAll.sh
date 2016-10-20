@@ -6,4 +6,5 @@ echo "Launching and running all containers"
 ./runMongo.sh
 ./runRestheart.sh
 ./runClient.sh
+./runClean.sh
 
