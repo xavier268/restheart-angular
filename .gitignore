@@ -1,8 +1,8 @@
-aot
-dist
-node_modules
-target
-typings
+client*/aot
+client*/dist
+client*/node_modules
+restheart/target
+client*/typings
 *.js.map
-app/**/*.js
+client*/app/**/*.js
 npm-debug.log
