@@ -1,7 +1,7 @@
 // Script to load the database with the admin and first users
 
 print("Preparing to init authentication records in auth/users , if not done already");
-var conn = new Mongo();
+var conn = new Mongo("mongo");
 var db = conn.getDB("auth");
 try {
     db.users.insertOne({_id: "admin", password: "temp", roles: ['admins', 'users']});
