@@ -78,11 +78,11 @@ static-resources-mounts:
       welcome-file: browser.html
       secured: false
       embedded: true
-    - what: static
-      where: /
-      welcome-file: index.html
-      secured: false
-      embedded: false
+#   - what: static
+#     where: /
+#     welcome-file: index.html
+#     secured: false
+#     embedded: false
 
 #### Application Logic
 

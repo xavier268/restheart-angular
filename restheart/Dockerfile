@@ -13,13 +13,12 @@ RUN yum -y update && yum -y install mongodb-org java-1.8.0-openjdk curl wget mc 
 ### Copy restheart and its config files
 COPY target/restheart.jar 	/restheart/restheart.jar
 COPY etc/  			/restheart/etc
-COPY static/                    /static
 
 ### Copy Mongo init scripts
 COPY mongoscripts/		/restheart/mongoscripts
 
 ### Ensure expected configuration files are present, even empty
-RUN touch /restheart/etc/my_restheart.yml && touch /restheart/mongoscripts/empty.js && touch /static/index.html
+RUN touch /restheart/etc/my_restheart.yml && touch /restheart/mongoscripts/empty.js
 
 EXPOSE 4443
 
