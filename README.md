@@ -2,7 +2,7 @@
 
 ## What is this repository
 
-This is a "quick-start" projet to build 3-tier applications, based on angular2 on the client side, and calling the restheart server for api and custom backend services, which in turn relies on a mongo database.
+This is a "quick-start" project to build 3-tier applications, based on angular2 on the client side, and calling the restheart server for api and custom backend services, which in turn relies on a mongo database.
 
 Restheart can be customized to backend capabilities.
 
@@ -15,8 +15,9 @@ All security is handled via Resthart, accessible only via https calls.
 
 ### Requirements
 
-* node installed globally, or preferably nvm using a "stable" version of node
-* docker running
+* node installed globally, or preferably nvm using a "stable" version of node,
+* java jdk8 and maven installed,
+* docker installed and running
 
 ### Make and install
 
