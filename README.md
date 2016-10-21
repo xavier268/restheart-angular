@@ -1,4 +1,40 @@
 # restheart-angular
 
-Refactored into independant sub-projects (mongo, restangular, main client, admin client, other clients, ...).
-Each client is supported with it dedicated docker container.
+## What is this repository
+
+This is a "quick-start" projet to build 3-tier applications, based on angular2 on the client side, and calling the restheart server for api and custom backend services, which in turn relies on a mongo database.
+
+Restheart can be customized to backend capabilities.
+
+## Security
+
+The client is only serving non secure, static files.
+All security is handled via Resthart, accessible only via https calls.
+
+## How to use it 
+
+### Requirements
+
+* node installed globally, or preferably nvm using a "stable" version of node
+* docker running
+
+### Make and install
+
+`cd restheart-angular`
+`./makeAll.sh && ./runAll.sh`
+
+### Verify
+
+`docker volume ls`
+`docker network ls`
+`docker ps`
+
+
+You should see 3 containers running : mongo, restheart and client.
+* mongo is not accesssible to the outside world, accessible via the created MYBRIDGE network
+* restheart is open to the world via https on port 443(default). It comminicates with mongo via MYBRIDGE.
+* client is open to the world on port 80. It will send api requests to resheart via https on port 443.
+
+There is a data volume, `data`, that keeps all the database content.
+The MYBRIDGE network is a custom bridge network between mongo and restheart.
+

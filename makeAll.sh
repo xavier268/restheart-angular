@@ -14,8 +14,7 @@ docker build .
 cd ..
 
 ## Client-main
-cd client-main
-nvm use stable
+cd client
 npm install
 npm run aot
 docker build .
