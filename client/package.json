@@ -4,10 +4,6 @@
   "description": "QuickStart for Restheart-angular2-docker integration",
   "scripts": {
     "start": "cp index-jit.html index.html && tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "docker-build": "npm run aot && docker build .",
-    "docker-run": "npm run docker-build && docker run -d -p 443:4443 $(docker build -q .)",
-    "pree2e": "npm run webdriver:update",
-    "e2e": "tsc && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
     "lint": "tslint ./app/**/*.ts -t verbose",
     "lite": "lite-server",
     "postinstall": "typings install",
@@ -61,7 +57,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "lite-server": "^2.2.2",
     "lodash": "^4.16.2",
-    "protractor": "^3.3.0",
     "rimraf": "^2.5.4",
     "rollup": "^0.36.3",
     "rollup-plugin-commonjs": "^5.0.4",

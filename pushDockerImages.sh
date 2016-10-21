@@ -7,8 +7,8 @@ docker tag mongo:latest $MYREP/mongo:$WHEN
 docker tag restheart:latest $MYREP/restheart:$WHEN
 docker tag client:latest $MYREP/client:$WHEN
 
-docker push $MYREP/mongo:$WHEN &
-docker push $MYREP/restheart:$WHEN &
-docker push $MYREP/client:$WHEN &
+docker push $MYREP/mongo:$WHEN 
+docker push $MYREP/restheart:$WHEN 
+docker push $MYREP/client:$WHEN 
 
-echo "Pushing all the images tagged with :$WHEN initited in the background"
+echo "All images tagged with :$WHEN were pushed"
