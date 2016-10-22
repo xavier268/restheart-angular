@@ -21,7 +21,7 @@ import { AuthService } from './serv/auth.service';
       // Order matters ... first match will do !
       { path: 'test', component: TestComponent },
       { path: '', component: LoginComponent },
-      { path: '404', component: E404Component }
+      { path: '**', component: E404Component }
     ])
   ],
   providers: [AuthService],
